@@ -45,6 +45,9 @@ export default function ProductTable() {
   const [selectedStockStatus, setSelectedStockStatus] = useState("");
   const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
   const [actionData, setActionData] = useState({ action: "", index: "" });
+  const [totalFilteredLength, setTotalFilteredLength] = useState(
+    products.length
+  );
   const [modelOpen, setModalOpen] = useState();
 
   const updateCurrentPage = useCallback(
@@ -99,6 +102,7 @@ export default function ProductTable() {
     if (sortConfig.key && sortConfig.key !== "image") {
       filtered = getSortedData(filtered, sortConfig.key, sortConfig.direction);
     }
+    setTotalFilteredLength(filtered.length);
     const data = paginateData(filtered, currentPage, itemsPerPage);
     setTotalPages(Math.ceil(filtered.length / 10));
     setColumnData(data);
@@ -187,7 +191,7 @@ export default function ProductTable() {
                   columnOrder={columnOrder}
                   handleModal={handleModal}
                   sortConfig={sortConfig}
-                  productsLength={products?.length || 0}
+                  productsLength={totalFilteredLength || 0}
                   currentPage={currentPage}
                   itemsPerPage={itemsPerPage}
                 />

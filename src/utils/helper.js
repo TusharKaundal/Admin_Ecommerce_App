@@ -1,4 +1,4 @@
-import { categories, productGenerateCounts } from "./constants";
+import { categories } from "./constants";
 
 export const getCardData = (products) => {
   const lowStockItemCount = products.filter((p) => p.stock < 5).length;
@@ -6,7 +6,7 @@ export const getCardData = (products) => {
   return {
     lowStockItemCount,
     totalCategories,
-    totalProduct: productGenerateCounts,
+    totalProduct: products.length,
   };
 };
 
