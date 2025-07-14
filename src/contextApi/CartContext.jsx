@@ -71,7 +71,10 @@ export const CartProvider = ({ children }) => {
       removeFromCart,
       updateQuantity,
       clearCart,
-      getTotal: cartItems.reduce((acc, item) => acc + item.price, 0),
+      getTotal: cartItems.reduce(
+        (acc, item) => acc + item.price * item.quantity,
+        0
+      ),
     }),
     [
       cartItems,

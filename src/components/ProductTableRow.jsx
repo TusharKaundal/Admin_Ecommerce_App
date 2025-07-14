@@ -70,7 +70,10 @@ const ProductTableRow = ({
                   <ViewButton
                     handleClick={() => handleModal("view", coldata.id)}
                   />
-                  <AddToCartButton handleClick={() => addToCart(coldata)} />
+                  <AddToCartButton
+                    disabled={coldata.status ? false : true}
+                    handleClick={() => addToCart(coldata)}
+                  />
                 </div>
               )}
               {column.label !== "Id" &&

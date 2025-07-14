@@ -44,8 +44,13 @@ const ViewProductModal = ({ id, isOpen, onCancel }) => {
             <p className="text-xl font-semibold">₹ {product.price}</p>
 
             <button
-              className="w-full md:mx-auto bg-black text-white p-3 font-semibold hover:bg-gray-800"
+              className={`w-full md:mx-auto bg-blue-600 text-white p-3 font-semibold ${
+                product.status
+                  ? "hover:bg-blue-700 cursor-pointer"
+                  : "cursor-not-allowed bg-blue-400"
+              }`}
               onClick={() => handleCart(product)}
+              disabled={product.status ? false : true}
             >
               ADD TO BAG
             </button>
