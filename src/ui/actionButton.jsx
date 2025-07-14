@@ -1,5 +1,4 @@
 export function AddToCartButton({ handleClick, disabled }) {
-  console.log(disabled);
   return (
     <button
       className={`flex h-10 items-center rounded-lg bg-blue-600 px-4 text-sm font-medium text-white ${

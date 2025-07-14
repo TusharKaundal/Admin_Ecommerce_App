@@ -1,6 +1,7 @@
 import { useState } from "react";
 import SearchBar from "./SearchBar";
 import { useCart } from "../contextApi/CartContext";
+import logo from "../assets/logo.png";
 
 const Header = () => {
   const [openMobileSearchBar, setMobileSearchBar] = useState(false);
@@ -8,7 +9,9 @@ const Header = () => {
   return (
     <>
       <nav className="grid grid-cols-2 md:grid-cols-3">
-        <div>Logo</div>
+        <div className="w-10">
+          <img src={logo} alt="Logo" />
+        </div>
         <div className="hidden md:block">
           <SearchBar />
         </div>

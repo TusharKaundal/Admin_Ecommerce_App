@@ -4,14 +4,16 @@ import React from "react";
 const SideBar = ({ children, title, handleClose, isOpen }) => {
   return (
     <div
-      className={`absolute inset-0 z-40  transition-all duration-300 ease-in-out ${
-        isOpen ? "translate-x-0" : "translate-x-full pointer-events-none"
+      className={`absolute inset-0 z-40 transition-all duration-300 ease-in-out ${
+        isOpen
+          ? "translate-x-0 visible"
+          : "translate-x-full pointer-events-none invisible"
       }`}
       onClick={handleClose}
     >
       <aside
         id="sidebar"
-        className={`fixed top-0 right-0 bg-white opacity-100 z-100 w-80 h-screen`}
+        className={`fixed top-0 right-0 bg-white opacity-100 z-100 w-70 sm:w-80 h-screen`}
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex h-full flex-col overflow-y-auto bg-white shadow-xl px-4 py-6 sm:px-6 animate-slideDown">

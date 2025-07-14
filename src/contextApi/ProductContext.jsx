@@ -39,7 +39,6 @@ export const ProductProvider = ({ children }) => {
       setText: updateSearchText,
     };
   }, [products, updateProducts, updateSearchText, searchText]);
-  console.log(searchText);
   return (
     <ProductContext.Provider value={contextValue}>
       {children}
