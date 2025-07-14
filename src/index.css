@@ -1,0 +1,47 @@
+@import "tailwindcss";
+
+
+@theme {
+    --animate-wiggleY: wiggleY 1s ease-in-out forwards;
+    --animate-slideDown: slideDown 1s ease-in-out forwards;
+    --animate-fadeIn: fadeIn 0.5s ease-in forwards;
+
+    @keyframes wiggleY {
+
+        0%,
+        100% {
+            transform: translateY(0);
+        }
+
+        50% {
+            transform: translateY(-5px);
+        }
+    }
+
+    @keyframes slideDown {
+        0% {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+    }
+
+    @keyframes fadeIn {
+        0% {
+            display: none;
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        100% {
+            display: block;
+            opacity: 1;
+            visibility: visible;
+        }
+    }
+}
