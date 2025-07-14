@@ -11,7 +11,7 @@ const generateMockProducts = (count) => {
       category: category,
       price: Math.floor(Math.random() * 5000),
       stock: stock,
-      status: stock > 0,
+      status: stock > 0 ? 1 : 0,
     };
     productsMap.set(i, product);
   }

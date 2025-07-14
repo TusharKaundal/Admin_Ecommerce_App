@@ -16,7 +16,6 @@ export const CartProvider = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const addToCart = useCallback((product) => {
-    console.log(product);
     setCartItems((prev) => {
       const existing = prev.find((item) => item.id === product.id);
       if (existing) {
@@ -37,7 +36,6 @@ export const CartProvider = ({ children }) => {
 
   const updateQuantity = useCallback((id, action) => {
     setCartItems((prev) => {
-      console.log(prev[id]);
       return prev
         .filter((item) =>
           item.id === id && item.quantity === 1 && action === "dec"
@@ -64,7 +62,6 @@ export const CartProvider = ({ children }) => {
     setIsOpen((prev) => !prev);
   }, []);
 
-  // 🧠 Memoize context value
   const value = useMemo(
     () => ({
       cartItems,

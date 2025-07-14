@@ -14,6 +14,7 @@ const ProductContext = createContext();
 
 export const ProductProvider = ({ children }) => {
   const [products, setProducts] = useState([]);
+  const [searchText, setSearchText] = useState("");
   useEffect(() => {
     async function getProducts() {
       const data = await generateMockProducts(productGenerateCounts);
@@ -26,13 +27,19 @@ export const ProductProvider = ({ children }) => {
     setProducts(newProducts);
   }, []);
 
+  const updateSearchText = useCallback((text) => {
+    setSearchText(text);
+  }, []);
+
   const contextValue = useMemo(() => {
     return {
       products,
-      setProducts: updateProducts, 
+      searchText,
+      setProducts: updateProducts,
+      setText: updateSearchText,
     };
-  }, [products, updateProducts]);
-
+  }, [products, updateProducts, updateSearchText, searchText]);
+  console.log(searchText);
   return (
     <ProductContext.Provider value={contextValue}>
       {children}

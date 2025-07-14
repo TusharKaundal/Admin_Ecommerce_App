@@ -3,14 +3,12 @@ import { useProductContext } from "../contextApi/ProductContext";
 import Modal from "../ui/Modal";
 
 const DeleteProductModal = ({ id, isOpen, onCancel }) => {
-  console.log(id, isOpen, onCancel);
   const { products, setProducts } = useProductContext();
   const productIndex = products.findIndex((item) => item.id === id);
   const product = products[productIndex] || "";
 
   const handleDelete = () => {
     const updatedProduct = products.filter((item) => item.id !== id);
-    console.log(updatedProduct);
     setProducts(updatedProduct);
     onCancel();
   };

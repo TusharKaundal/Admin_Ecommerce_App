@@ -11,6 +11,4 @@ const RowSkeleton = ({ columnOrder }) => {
   );
 };
 
-const ProductTableSkeletion = () => {};
-
 export { RowSkeleton };

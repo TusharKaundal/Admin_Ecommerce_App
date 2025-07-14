@@ -3,7 +3,7 @@ import dragIcon from "../assets/dragIcon.svg";
 import ProductTableRow from "./ProductTableRow";
 import { RowSkeleton } from "../ui/skeleton";
 import { useProductContext } from "../contextApi/ProductContext";
-import SearchBar from "../ui/SearchBar";
+import SearchBar from "./SearchBar";
 import Pagination from "./Pagination";
 import { paginateData } from "../utils/pagination";
 import { categories } from "../utils/constants";
@@ -18,6 +18,7 @@ import {
 import DeleteProductModal from "./DeleteProductModal";
 import ViewProductModal from "./ViewProductModal";
 import EditProductModal from "./EditProductModal";
+import { searchProducts } from "../utils/searching";
 
 const initialColumns = [
   { id: "id", label: "Id" },
@@ -34,40 +35,17 @@ const stockStatus = ["In", "Out"];
 
 export default function ProductTable() {
   const [columnOrder, setColumnOrder] = useState(initialColumns);
-  const { products } = useProductContext();
+  const { products, searchText } = useProductContext();
   const [columnData, setColumnData] = useState([]);
   const itemsPerPage = 10;
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(Math.ceil(products.length / 10));
   const columnDragIndex = useRef("");
-  console.log("Product Table render");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedStockStatus, setSelectedStockStatus] = useState("");
   const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
   const [actionData, setActionData] = useState({ action: "", index: "" });
   const [modelOpen, setModalOpen] = useState();
-
-  useEffect(() => {
-    let filtered = [...products];
-    if (selectedCategory) {
-      filtered = filterByCategory(filtered, selectedCategory);
-    }
-    if (selectedStockStatus) {
-      filtered = filterByStockStatus(filtered, selectedStockStatus);
-    }
-    if (sortConfig.key && sortConfig.key !== "image") {
-      getSortedData(filtered, sortConfig.key, sortConfig.direction);
-    }
-    const data = paginateData(filtered, currentPage, itemsPerPage);
-    setTotalPages(Math.ceil(filtered.length / 10));
-    setColumnData(data);
-  }, [
-    currentPage,
-    products,
-    selectedCategory,
-    selectedStockStatus,
-    sortConfig,
-  ]);
 
   const updateCurrentPage = useCallback(
     (newPage) => setCurrentPage(newPage),
@@ -102,14 +80,40 @@ export default function ProductTable() {
     });
   };
 
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [selectedCategory, sortConfig, selectedStockStatus]);
-
   function handleModal(name, id) {
     setActionData({ action: name, index: id });
     setModalOpen(true);
   }
+
+  useEffect(() => {
+    let filtered = [...products];
+    if (searchText) {
+      filtered = searchProducts(filtered, searchText);
+    }
+    if (selectedCategory) {
+      filtered = filterByCategory(filtered, selectedCategory);
+    }
+    if (selectedStockStatus) {
+      filtered = filterByStockStatus(filtered, selectedStockStatus);
+    }
+    if (sortConfig.key && sortConfig.key !== "image") {
+      filtered = getSortedData(filtered, sortConfig.key, sortConfig.direction);
+    }
+    const data = paginateData(filtered, currentPage, itemsPerPage);
+    setTotalPages(Math.ceil(filtered.length / 10));
+    setColumnData(data);
+  }, [
+    currentPage,
+    products,
+    selectedCategory,
+    selectedStockStatus,
+    sortConfig,
+    searchText,
+  ]);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [selectedCategory, sortConfig, selectedStockStatus, searchText]);
 
   return (
     <>
@@ -182,6 +186,10 @@ export default function ProductTable() {
                   columnData={columnData}
                   columnOrder={columnOrder}
                   handleModal={handleModal}
+                  sortConfig={sortConfig}
+                  productsLength={products?.length || 0}
+                  currentPage={currentPage}
+                  itemsPerPage={itemsPerPage}
                 />
               </Suspense>
             </tbody>

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import SearchBar from "../ui/SearchBar";
+import SearchBar from "./SearchBar";
 import { useCart } from "../contextApi/CartContext";
 
 const Header = () => {

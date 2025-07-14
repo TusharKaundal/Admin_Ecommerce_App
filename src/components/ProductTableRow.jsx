@@ -6,13 +6,33 @@ import {
   ViewButton,
 } from "../ui/actionButton";
 import { useCart } from "../contextApi/CartContext";
-import Modal from "../ui/Modal";
 
-const ProductTableRow = ({ columnData, columnOrder, handleModal }) => {
+const ProductTableRow = ({
+  columnData,
+  columnOrder,
+  handleModal,
+  sortConfig,
+  productsLength,
+  currentPage,
+  itemsPerPage,
+}) => {
   const { addToCart } = useCart();
+
+  const indexing = (index) => {
+    if (sortConfig.key === "id") {
+      if (sortConfig.direction === "asc") {
+        return itemsPerPage * (currentPage - 1) + index + 1;
+      }
+      if (sortConfig.direction === "desc") {
+        return productsLength - (currentPage - 1) * itemsPerPage - index;
+      }
+    }
+    return itemsPerPage * (currentPage - 1) + index + 1;
+  };
+
   return (
     <>
-      {columnData.map((coldata) => (
+      {columnData.map((coldata, index) => (
         <tr
           key={coldata.id}
           className="bg-white border-b border-gray-100 hover:bg-gray-50 transition-all duration-300 ease-in-out last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-md [&:first-child>td:last-child]:rounded-tr-md [&:last-child>td:first-child]:rounded-bl-md [&:last-child>td:last-child]:rounded-br-md"
@@ -22,9 +42,7 @@ const ProductTableRow = ({ columnData, columnOrder, handleModal }) => {
               key={column.id}
               className="px-4 py-3 whitespace-nowrap animate-slideDown"
             >
-              {column.label === "Id" && (
-                <p>{coldata[column.id].split("#")[1]}</p>
-              )}
+              {column.label === "Id" && <p>{indexing(index)}</p>}
               {column.label === "Image" && (
                 <img
                   src={coldata[column.id]}

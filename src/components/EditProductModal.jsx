@@ -5,7 +5,6 @@ import Modal from "../ui/Modal";
 import { categories } from "../utils/constants";
 
 const EditProductModal = ({ id, isOpen, onCancel }) => {
-  console.log(id, isOpen, onCancel);
   const { products, setProducts } = useProductContext();
   const productIndex = products.findIndex((item) => item.id === id);
   const product = products[productIndex];

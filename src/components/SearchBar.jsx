@@ -1,6 +1,19 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useProductContext } from "../contextApi/ProductContext";
 
 const SearchBar = ({ variant = "" }) => {
+  const [inputText, setInputText] = useState("");
+  const { setText } = useProductContext();
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setText(inputText.trim().toLowerCase());
+    }, 1000);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [inputText, setText]);
   return (
     <form
       className={`w-full ${variant === "mobile" ? "animate-slideDown" : ""}`}
@@ -9,6 +22,8 @@ const SearchBar = ({ variant = "" }) => {
         <input
           id="search_products"
           type="text"
+          value={inputText}
+          onChange={(event) => setInputText(event.target.value)}
           className="p-2.5 w-full z-20 text-sm text-gray-900 bg-white rounded-s-lg border-2 border-r-0 border-gray-300  focus:outline-none"
           placeholder="Search Product"
           required
