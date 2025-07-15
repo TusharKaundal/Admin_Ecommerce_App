@@ -5,6 +5,7 @@
     --animate-wiggleY: wiggleY 1s ease-in-out forwards;
     --animate-slideDown: slideDown 1s ease-in-out forwards;
     --animate-fadeIn: fadeIn 0.5s ease-in forwards;
+    --animate-Shimmer: shimmer 2s ease-in-out Infinite;
 
     @keyframes wiggleY {
 
@@ -42,6 +43,12 @@
             display: block;
             opacity: 1;
             visibility: visible;
+        }
+    }
+
+    @keyframes shimmer {
+        100% {
+            transform: translateX(100%);
         }
     }
 }

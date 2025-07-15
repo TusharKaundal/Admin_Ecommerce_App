@@ -6,7 +6,7 @@ const Pagination = React.memo(
     const pages = generatePageNumber(currentPage, totalPages);
 
     return (
-      <div className="flex rounded-md items-center gap-2 sm:gap-4">
+      <div className="flex rounded-md items-center gap-2 sm:gap-4 animate-[pulse_1s_forwards]">
         <button
           className={`flex h-10 w-10 items-center justify-center rounded-md border border-gray-300 hover:cursor-pointer hover:bg-gray-100`}
           onClick={() => updateCurrentPage(currentPage - 1)}

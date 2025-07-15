@@ -1,7 +1,13 @@
-import { Suspense, useCallback, useEffect, useRef, useState } from "react";
+import {
+  lazy,
+  Suspense,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import dragIcon from "../assets/dragIcon.svg";
-import ProductTableRow from "./ProductTableRow";
-import { RowSkeleton } from "../ui/skeleton";
+const ProductTableRow = lazy(() => import("./ProductTableRow"));
 import { useProductContext } from "../contextApi/ProductContext";
 import SearchBar from "./SearchBar";
 import Pagination from "./Pagination";
@@ -19,6 +25,7 @@ import DeleteProductModal from "./DeleteProductModal";
 import ViewProductModal from "./ViewProductModal";
 import EditProductModal from "./EditProductModal";
 import { searchProducts } from "../utils/searching";
+import { RowSkeleton } from "../ui/skeleton";
 
 const initialColumns = [
   { id: "id", label: "Id" },
@@ -121,7 +128,7 @@ export default function ProductTable() {
 
   return (
     <>
-      <div className="w-full p-2 bg-gray-50 rounded-lg shadow-md">
+      <div className="w-full p-2 bg-gray-50 rounded-lg shadow-md animate-fadeIn">
         <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-2">
           <div className="flex md:w-100">
             <SearchBar />
@@ -142,7 +149,7 @@ export default function ProductTable() {
           </div>
         </div>
         <div className="overflow-x-auto">
-          <table className="table-fixed min-w-full text-sm text-left text-gray-800">
+          <table className="min-w-full text-sm text-left text-gray-800">
             <thead className="bg-gray-50 uppercase font-semibold">
               <tr>
                 {columnOrder.map((column, index) => (
@@ -185,21 +192,29 @@ export default function ProductTable() {
               </tr>
             </thead>
             <tbody>
-              <Suspense fallback={<RowSkeleton columnOrder={columnOrder} />}>
-                <ProductTableRow
-                  columnData={columnData}
-                  columnOrder={columnOrder}
-                  handleModal={handleModal}
-                  sortConfig={sortConfig}
-                  productsLength={totalFilteredLength || 0}
-                  currentPage={currentPage}
-                  itemsPerPage={itemsPerPage}
-                />
-              </Suspense>
+              {columnData.map((coldata, index) => (
+                <Suspense fallback={<RowSkeleton />}>
+                  <ProductTableRow
+                    coldata={coldata}
+                    index={index}
+                    columnOrder={columnOrder}
+                    handleModal={handleModal}
+                    sortConfig={sortConfig}
+                    productsLength={totalFilteredLength || 0}
+                    currentPage={currentPage}
+                    itemsPerPage={itemsPerPage}
+                  />
+                </Suspense>
+              ))}
             </tbody>
           </table>
         </div>
       </div>
+      {columnData.length === 0 && (
+        <div className="flex w-full h-10 justify-center items-center">
+          <p>No Result Found</p>
+        </div>
+      )}
       {totalPages !== 0 && (
         <div className="mt-3 flex w-full justify-center">
           <Pagination
@@ -207,7 +222,6 @@ export default function ProductTable() {
             currentPage={currentPage}
             updateCurrentPage={updateCurrentPage}
           />
-          {columnData.length === 0 && <p>No Result Found</p>}
         </div>
       )}
       {actionData.action === "update" && (

@@ -18,7 +18,7 @@ const generateMockProducts = (count) => {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve(Array.from(productsMap.values()));
-    }, 1000);
+    }, 400);
   });
 };
 
