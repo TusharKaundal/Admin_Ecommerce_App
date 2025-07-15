@@ -51,3 +51,7 @@ A robust and responsive Admin Dashboard for managing products, stock, and invent
    npm run build
 
    ```
+
+5. **Play with the constanst to generate more proudcts**
+
+- You can changes constants like _productGenerateCounts_ and _categories_ to generate more products with different categories

@@ -35,7 +35,7 @@ const ProductTableRow = ({
     <>
       <tr
         key={coldata.id}
-        className="bg-white border-b border-gray-100 hover:bg-gray-50 transition-all duration-300 ease-in-out last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-md [&:first-child>td:last-child]:rounded-tr-md [&:last-child>td:first-child]:rounded-bl-md [&:last-child>td:last-child]:rounded-br-md"
+        className="bg-white border-b border-gray-100 animate-slideDown hover:bg-gray-50 transition-all duration-300 ease-in-out last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-md [&:first-child>td:last-child]:rounded-tr-md [&:last-child>td:first-child]:rounded-bl-md [&:last-child>td:last-child]:rounded-br-md"
       >
         {columnOrder.map((column) => (
           <td key={column.id} className="px-4 py-3 whitespace-nowrap">

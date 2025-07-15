@@ -20,7 +20,7 @@ const CartSideBar = () => {
       handleClose={handleOpenClose}
     >
       {cartItems.length ? (
-        <div className="h-full">
+        <div className="h-screen">
           <button
             className="flex items-center gap-2 w-fit ms-auto p-2 rounded-sm hover:bg-gray-50 hover:cursor-pointer text-lg text-gray-500"
             onClick={clearCart}

@@ -4,7 +4,7 @@ import React from "react";
 const SideBar = ({ children, title, handleClose, isOpen }) => {
   return (
     <div
-      className={`absolute inset-0 z-40 transition-all duration-300 ease-in-out ${
+      className={`absolute min-h-screen inset-0 z-40 transition-all duration-300 ease-in-out ${
         isOpen
           ? "translate-x-0 visible"
           : "translate-x-full pointer-events-none invisible"
@@ -13,10 +13,10 @@ const SideBar = ({ children, title, handleClose, isOpen }) => {
     >
       <aside
         id="sidebar"
-        className={`fixed top-0 right-0 bg-white opacity-100 z-100 w-70 sm:w-80 h-screen`}
+        className={`fixed top-0 right-0 bottom-0 bg-white opacity-100 z-100 w-70 sm:w-80`}
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex h-full flex-col overflow-y-auto bg-white shadow-xl px-4 py-6 sm:px-6 animate-slideDown">
+        <div className="flex min-h-screen grow flex-col overflow-y-auto bg-white shadow-xl px-4 py-6 sm:px-6 animate-slideDown h-full">
           <div className="flex items-start justify-between">
             <h2 className="text-lg font-medium text-gray-900">{title}</h2>
             <div className="ml-3 flex h-7 items-center">
