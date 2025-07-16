@@ -46,7 +46,7 @@ const EditProductModal = ({ id, isOpen, onCancel }) => {
       category: formData.category,
       price: Number(formData.price),
       stock: Number(formData.stock),
-      status: Number(formData.stock) > 0,
+      status: Number(formData.stock) > 0 ? 1 : 0,
     };
 
     setProducts(updatedProduct);

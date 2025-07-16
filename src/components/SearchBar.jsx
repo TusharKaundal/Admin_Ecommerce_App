@@ -39,7 +39,7 @@ const SearchBar = ({ variant = "" }) => {
           </svg>
         </div>
         <input
-          id="search_products"
+          id={`search_products_${variant}`}
           type="text"
           value={inputText}
           onChange={(event) => setInputText(event.target.value)}

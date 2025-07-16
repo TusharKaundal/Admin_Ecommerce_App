@@ -13,7 +13,7 @@ const Header = () => {
           <img src={logo} alt="Logo" />
         </div>
         <div className="hidden md:block">
-          <SearchBar />
+          <SearchBar variant="header" />
         </div>
         <div className="flex justify-end items-center gap-1">
           <div

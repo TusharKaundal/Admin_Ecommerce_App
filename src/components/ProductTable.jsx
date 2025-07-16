@@ -131,7 +131,7 @@ export default function ProductTable() {
       <div className="w-full p-2 bg-gray-50 rounded-lg shadow-md animate-fadeIn">
         <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-2">
           <div className="flex md:w-100">
-            <SearchBar />
+            <SearchBar variant="table" />
           </div>
           <div className="flex gap-4 justify-end items-center">
             <DropDown
@@ -193,7 +193,7 @@ export default function ProductTable() {
             </thead>
             <tbody>
               {columnData.map((coldata, index) => (
-                <Suspense fallback={<RowSkeleton />}>
+                <Suspense key={coldata.name + index} fallback={<RowSkeleton />}>
                   <ProductTableRow
                     coldata={coldata}
                     index={index}
@@ -206,15 +206,22 @@ export default function ProductTable() {
                   />
                 </Suspense>
               ))}
+              {columnData.length === 0 && (
+                <tr className="bg-white border-b border-gray-100 animate-slideDown hover:bg-gray-50 transition-all duration-300 ease-in-out last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-md [&:first-child>td:last-child]:rounded-tr-md [&:last-child>td:first-child]:rounded-bl-md [&:last-child>td:last-child]:rounded-br-md">
+                  <td
+                    className="px-4 py-3 whitespace-nowrap"
+                    colSpan={columnOrder.length}
+                  >
+                    <div className="flex justify-center items-center">
+                      <p>No Result Found</p>
+                    </div>
+                  </td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>
       </div>
-      {columnData.length === 0 && (
-        <div className="flex w-full h-10 justify-center items-center">
-          <p>No Result Found</p>
-        </div>
-      )}
       {totalPages !== 0 && (
         <div className="mt-3 flex w-full justify-center">
           <Pagination
