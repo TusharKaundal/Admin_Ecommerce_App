@@ -7,6 +7,7 @@ export default function DropDown({
   data,
   defaultOption = true,
 }) {
+  console.log(title, selected, data);
   return (
     <div className="max-w-md flex items-center gap-1">
       <label
@@ -19,7 +20,7 @@ export default function DropDown({
         id={title}
         name={title}
         value={selected}
-        onChange={(e) => onChange(e.target.value)}
+        onChange={onChange}
         className="block grow rounded-md border border-gray-300 bg-white p-2 text-sm shadow-sm focus:border-blue-500 focus:ring-blue-500"
       >
         {defaultOption && <option value="">All</option>}

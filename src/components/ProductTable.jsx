@@ -62,6 +62,17 @@ export default function ProductTable() {
     []
   );
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    if (name === "category") {
+      setSelectedCategory(value);
+    }
+
+    if (name === "stock status") {
+      setSelectedStockStatus(value);
+    }
+  };
+
   const onDropColum = (e, idx) => {
     e.preventDefault();
     const draggedIndex = columnDragIndex.current;
@@ -136,15 +147,15 @@ export default function ProductTable() {
           <div className="flex gap-4 justify-end items-center">
             <DropDown
               data={categories}
-              onChange={setSelectedCategory}
+              onChange={handleChange}
               selected={selectedCategory}
               title="category"
             />
             <DropDown
               data={stockStatus}
-              onChange={setSelectedStockStatus}
+              onChange={handleChange}
               selected={selectedStockStatus}
-              title="Stock status"
+              title="stock status"
             />
           </div>
         </div>
