@@ -1,4 +1,11 @@
-const categories = ["Electronics", "Grocery", "Clothing", "Accessories", "Food"];
-const productGenerateCounts = 60;
+const categories = [
+  "Electronics",
+  "Grocery",
+  "Clothing",
+  "Accessories",
+  "Food",
+];
+const productGenerateCounts = 100;
+const itemsPerPage = 10;
 
-export { categories, productGenerateCounts };
+export { categories, productGenerateCounts, itemsPerPage };

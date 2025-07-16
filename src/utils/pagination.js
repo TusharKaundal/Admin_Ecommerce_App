@@ -8,7 +8,7 @@ export const generatePageNumber = (currentPage, totalPages) => {
   return data;
 };
 
-export const paginateData = (data, page, limit) => {
+export const getPaginateData = (data, page, limit) => {
   const startPage = (page - 1) * limit;
   const endPage = startPage + limit;
   return data.slice(startPage, endPage);

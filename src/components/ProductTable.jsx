@@ -3,6 +3,7 @@ import {
   Suspense,
   useCallback,
   useEffect,
+  useMemo,
   useRef,
   useState,
 } from "react";
@@ -11,8 +12,8 @@ const ProductTableRow = lazy(() => import("./ProductTableRow"));
 import { useProductContext } from "../contextApi/ProductContext";
 import SearchBar from "./SearchBar";
 import Pagination from "./Pagination";
-import { paginateData } from "../utils/pagination";
-import { categories } from "../utils/constants";
+import { getPaginateData } from "../utils/pagination";
+import { categories, itemsPerPage } from "../utils/constants";
 import DropDown from "../ui/DropDown";
 import upIcon from "../assets/upArrow.svg";
 import downIcon from "../assets/downArrow.svg";
@@ -43,18 +44,13 @@ const stockStatus = ["In", "Out"];
 export default function ProductTable() {
   const [columnOrder, setColumnOrder] = useState(initialColumns);
   const { products, searchText } = useProductContext();
-  const [columnData, setColumnData] = useState([]);
-  const itemsPerPage = 10;
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(Math.ceil(products.length / 10));
   const columnDragIndex = useRef("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedStockStatus, setSelectedStockStatus] = useState("");
   const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
   const [actionData, setActionData] = useState({ action: "", index: "" });
-  const [totalFilteredLength, setTotalFilteredLength] = useState(
-    products.length
-  );
+
   const [modelOpen, setModalOpen] = useState();
 
   const updateCurrentPage = useCallback(
@@ -106,7 +102,7 @@ export default function ProductTable() {
     setModalOpen(true);
   }
 
-  useEffect(() => {
+  const filteredItems = useMemo(() => {
     let filtered = [...products];
     if (searchText) {
       filtered = searchProducts(filtered, searchText);
@@ -120,18 +116,16 @@ export default function ProductTable() {
     if (sortConfig.key && sortConfig.key !== "image") {
       filtered = getSortedData(filtered, sortConfig.key, sortConfig.direction);
     }
-    setTotalFilteredLength(filtered.length);
-    const data = paginateData(filtered, currentPage, itemsPerPage);
-    setTotalPages(Math.ceil(filtered.length / 10));
-    setColumnData(data);
-  }, [
+    return filtered;
+  }, [products, selectedCategory, selectedStockStatus, sortConfig, searchText]);
+
+  const totalPages = Math.ceil(filteredItems.length / itemsPerPage);
+  const totalFilteredLength = filteredItems.length;
+  const paginatedData = getPaginateData(
+    filteredItems,
     currentPage,
-    products,
-    selectedCategory,
-    selectedStockStatus,
-    sortConfig,
-    searchText,
-  ]);
+    itemsPerPage
+  );
 
   useEffect(() => {
     setCurrentPage(1);
@@ -203,7 +197,7 @@ export default function ProductTable() {
               </tr>
             </thead>
             <tbody>
-              {columnData.map((coldata, index) => (
+              {paginatedData.map((coldata, index) => (
                 <Suspense key={coldata.name + index} fallback={<RowSkeleton />}>
                   <ProductTableRow
                     coldata={coldata}
@@ -217,7 +211,7 @@ export default function ProductTable() {
                   />
                 </Suspense>
               ))}
-              {columnData.length === 0 && (
+              {paginatedData.length === 0 && (
                 <tr className="bg-white border-b border-gray-100 animate-slideDown hover:bg-gray-50 transition-all duration-300 ease-in-out last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-md [&:first-child>td:last-child]:rounded-tr-md [&:last-child>td:first-child]:rounded-bl-md [&:last-child>td:last-child]:rounded-br-md">
                   <td
                     className="px-4 py-3 whitespace-nowrap"
