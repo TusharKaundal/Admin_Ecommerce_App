@@ -2,25 +2,37 @@ export const RowSkeleton = () => {
   return (
     <tr className="bg-white border-b border-gray-100 hover:bg-gray-50 transition-all duration-300 ease-in-out last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-md [&:first-child>td:last-child]:rounded-tr-md [&:last-child>td:first-child]:rounded-bl-md [&:last-child>td:last-child]:rounded-br-md">
       <td className="px-4 py-3 whitespace-nowrap animate-pulse">
-        <p className="bg-gray-300 h-3"></p>
+        <p className="bg-gray-300">
+          <span className="opacity-0">1</span>
+        </p>
       </td>
       <td className="px-4 py-3 whitespace-nowrap animate-pulse">
-        <div className="bg-gray-300 h-3"></div>
+        <div className="bg-gray-300">
+          <span className="opacity-0">Product 1</span>
+        </div>
       </td>
       <td className="px-4 py-3 whitespace-nowrap animate-pulse">
         <div className="bg-gray-300 rounded-md h-16 w-auto max-w-25"></div>
       </td>
       <td className="px-4 py-3 whitespace-nowrap animate-pulse">
-        <div className="bg-gray-300 h-3"></div>
+        <div className="bg-gray-300">
+          <span className="opacity-0">Grocery</span>
+        </div>
       </td>
       <td className="px-4 py-3 whitespace-nowrap animate-pulse">
-        <div className="bg-gray-300 h-3"></div>
+        <div className="bg-gray-300">
+          <span className="opacity-0">₹ 4578</span>
+        </div>
       </td>
       <td className="px-4 py-3 whitespace-nowrap animate-pulse">
-        <div className="bg-gray-300 h-3"></div>
+        <div className="bg-gray-300">
+          <span className="opacity-0">58</span>
+        </div>
       </td>
       <td className="px-4 py-3 whitespace-nowrap animate-pulse">
-        <div className="bg-gray-300 h-3 rounded-full px-2 py-1"></div>
+        <div className="bg-gray-300 rounded-full px-2 py-1">
+          <span className="opacity-0">In Stock</span>
+        </div>
       </td>
       <td className="px-4 py-3 whitespace-nowrap animate-pulse">
         <div className="flex gap-3">
